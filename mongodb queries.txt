@@ -1,0 +1,73 @@
+--Mongodb queries
+
+--use database
+use trainerinfo
+
+--create collection
+db.createCollection("trainers",{capped:true, autoIndexId:true, size:6142800, max:1000})
+
+--Insert record to collection
+
+db.trainers.insert({
+... name:'Anudeep',
+... skills:'HTML, HTML5, CSS3,Javascript',
+... tags:['HTML','HTML5','CSS3','JavaScript'],
+... likes:7000
+... })
+
+--display dbs
+show dbs
+
+--show the current db
+db
+
+--To check all records entered
+db.trainers.find()
+
+--Trainer name is equal to Anudeep
+db.trainers.find({name:'Anudeep'})
+
+--Trainer name is Balu
+db.trainers.find({name:'Balu'})
+
+--Trainer name is equal to Balu in formatted output
+db.trainers.find({name:'Balu'}).pretty()
+
+--Trainer likes is equal to 9000
+ db.trainers.find({likes:9000})
+
+--greater than 7000
+db.trainers.find({likes:{$gt:7000}})
+
+--less than 7000
+db.trainers.find({likes:{$lt:7000}})
+
+--less than or equal to 7000
+ db.trainers.find({likes:{$lte:7000}})
+
+--greater than 7000
+db.trainers.find({likes:{$gte:7000}})
+
+--Trainers whose skills are HTML OR CSS3
+db.trainers.find({tags:{$in:['HTML','CSS3']}}).pretty()
+
+--Trainers whose skills are Python OR Java
+ db.trainers.find({tags:{$in:['PYTHON','JAVA']}}).pretty()
+
+--Trainers whose skills are Python OR Java sort by name asc
+db.trainers.find({tags:{$in:['PYTHON','JAVA']}}).sort({name:1}).pretty()
+
+--Trainers whose skills are Python OR Java sort by name desc
+db.trainers.find({tags:{$in:['PYTHON','JAVA']}}).sort({name:-1}).pretty()
+
+--greater than 7000 and less than 7000
+db.trainers.find({likes:{$gt:3000,$lt:7000}}).pretty()
+
+--doubt--Trainers whose skills are Python and Java
+db.trainers.find({tags:{$and:[{'Python'},{'Java'}]}}).pretty()
+
+--update record LIKES from 7000 to 7010
+db.trainers.update({likes:7000},{$set:{likes:7010}})
+
+--Trainers whose tags are C and likes>3456 
+db.trainers.find({$and:[{likes:{$gt:7000}},{tags:'C'}]}).pretty()
